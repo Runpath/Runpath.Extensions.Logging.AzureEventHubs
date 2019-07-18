@@ -1,0 +1,2 @@
+Runpath.Extensions.Logging.AzureEventHubs
+Copyright 2019 Experian plc
