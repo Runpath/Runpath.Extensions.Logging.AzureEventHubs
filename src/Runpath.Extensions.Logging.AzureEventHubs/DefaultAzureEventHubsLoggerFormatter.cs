@@ -17,6 +17,7 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
             {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                Error = (_, args) => args.ErrorContext.Handled = true,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Converters = { new StringEnumConverter() }
