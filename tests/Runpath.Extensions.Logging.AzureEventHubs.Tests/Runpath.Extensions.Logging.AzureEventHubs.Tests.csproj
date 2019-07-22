@@ -14,4 +14,8 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Runpath.Extensions.Logging.AzureEventHubs\Runpath.Extensions.Logging.AzureEventHubs.csproj" />
+  </ItemGroup>
+
 </Project>
