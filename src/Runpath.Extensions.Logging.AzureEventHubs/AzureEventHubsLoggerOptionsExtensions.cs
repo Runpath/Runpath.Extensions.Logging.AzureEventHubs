@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.EventHubs;
+﻿using System;
+using Microsoft.Azure.EventHubs;
 
 namespace Runpath.Extensions.Logging.AzureEventHubs
 {
@@ -20,7 +21,7 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
                 connectionString = builder.ToString();
                 return true;
             }
-            catch
+            catch (ArgumentException)
             {
                 connectionString = null;
                 return false;
