@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Azure.EventHubs;
+﻿using Microsoft.Azure.EventHubs;
 
+// ReSharper disable once CheckNamespace
 namespace Runpath.Extensions.Logging.AzureEventHubs
 {
     public static class AzureEventHubsLoggerOptionsExtensions
@@ -21,7 +21,7 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
                 connectionString = builder.ToString();
                 return true;
             }
-            catch (ArgumentException)
+            catch
             {
                 connectionString = null;
                 return false;
