@@ -87,7 +87,7 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
             {
                 await this.eventHubClient.SendAsync(eventDataBatch).ConfigureAwait(false);
             }
-            catch (Exception _)
+            catch
             {
                 // ignored
             }
