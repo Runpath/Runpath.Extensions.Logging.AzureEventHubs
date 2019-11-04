@@ -95,7 +95,14 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
 
         public void Dispose()
         {
-            this.channel.Writer.Complete();
+            try
+            {
+                this.channel.Writer.Complete();
+            }
+            catch (ChannelClosedException)
+            {
+                // ignored
+            }
 
             this.optionsReloadToken?.Dispose();
         }
