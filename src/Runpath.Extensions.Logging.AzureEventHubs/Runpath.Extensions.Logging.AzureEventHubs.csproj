@@ -7,7 +7,7 @@
     <Company>Runpath Digital</Company>
     <Authors>Runpath Digital</Authors>
     <Description>Azure Event Hubs logger provider implementation for Microsoft.Extensions.Logging.</Description>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageTags>logging azure event hubs</PackageTags>
     <PackageProjectUrl>https://github.com/Runpath/Runpath.Extensions.Logging.AzureEventHubs</PackageProjectUrl>
@@ -32,10 +32,10 @@
   <ItemGroup>
     <Compile Include="../shared/*.cs" />
 
-    <PackageReference Include="Microsoft.Azure.EventHubs" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Azure.EventHubs" Version="4.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.1.1" />
-    <PackageReference Include="System.Threading.Channels" Version="4.5.0" />
+    <PackageReference Include="System.Threading.Channels" Version="4.7.0" />
   </ItemGroup>
 
 </Project>
