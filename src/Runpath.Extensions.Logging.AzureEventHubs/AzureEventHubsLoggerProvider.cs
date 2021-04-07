@@ -19,12 +19,12 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
         public AzureEventHubsLoggerProvider(IOptionsMonitor<AzureEventHubsLoggerOptions> options, IAzureEventHubsLoggerFormatter formatter, IAzureEventHubsLoggerProcessor processor)
         {
             this.options = options;
+            this.formatter = formatter;
+            this.processor = processor;
             this.loggers = new ConcurrentDictionary<string, AzureEventHubsLogger>();
 
             ReloadLoggerOptions(options.CurrentValue);
-
-            this.formatter = formatter;
-            this.processor = processor;
+            this.optionsReloadToken = this.options.OnChange(ReloadLoggerOptions);
 
             SetScopeProvider(NullExternalScopeProvider.Instance);
         }
@@ -35,8 +35,6 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
             {
                 logger.Value.Options = options;
             }
-
-            this.optionsReloadToken = this.options.OnChange(ReloadLoggerOptions);
         }
 
         /// <inheritdoc/>
