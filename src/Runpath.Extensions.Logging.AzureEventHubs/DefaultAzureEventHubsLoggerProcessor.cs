@@ -12,7 +12,6 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
     /// </summary>
     internal class DefaultAzureEventHubsLoggerProcessor : IAzureEventHubsLoggerProcessor
     {
-        private readonly IOptionsMonitor<AzureEventHubsLoggerOptions> options;
         private readonly Channel<EventData> channel;
 
         private IDisposable optionsReloadToken;
@@ -20,9 +19,8 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
 
         public DefaultAzureEventHubsLoggerProcessor(IOptionsMonitor<AzureEventHubsLoggerOptions> options)
         {
-            this.options = options;
-
             ReloadLoggerOptions(options.CurrentValue);
+            this.optionsReloadToken = options.OnChange(ReloadLoggerOptions);
 
             this.channel = Channel.CreateBounded<EventData>(new BoundedChannelOptions(options.CurrentValue.QueueDepth)
             {
@@ -38,8 +36,6 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
         private void ReloadLoggerOptions(AzureEventHubsLoggerOptions options)
         {
             this.eventHubClient = options.EventHubClientFactory?.Invoke(options);
-
-            this.optionsReloadToken = this.options.OnChange(ReloadLoggerOptions);
         }
 
         public void Process(EventData eventData) => this.channel.Writer.TryWrite(eventData);
