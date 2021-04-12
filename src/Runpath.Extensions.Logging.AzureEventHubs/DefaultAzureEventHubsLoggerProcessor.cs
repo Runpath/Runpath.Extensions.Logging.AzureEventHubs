@@ -35,7 +35,6 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
 
         private void ReloadLoggerOptions(AzureEventHubsLoggerOptions options)
         {
-            this.eventHubClient?.Close();
             this.eventHubClient = options.EventHubClientFactory?.Invoke(options);
         }
 
