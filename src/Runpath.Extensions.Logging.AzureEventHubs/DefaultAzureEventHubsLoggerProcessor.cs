@@ -2,7 +2,8 @@
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Microsoft.Azure.EventHubs;
+using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Extensions.Options;
 
 namespace Runpath.Extensions.Logging.AzureEventHubs
@@ -15,7 +16,7 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
         private readonly Channel<EventData> channel;
 
         private IDisposable optionsReloadToken;
-        private EventHubClient eventHubClient;
+        private EventHubProducerClient eventHubClient;
 
         public DefaultAzureEventHubsLoggerProcessor(IOptionsMonitor<AzureEventHubsLoggerOptions> options)
         {
@@ -52,7 +53,7 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
                     continue;
                 }
 
-                var eventDataBatch = this.eventHubClient.CreateBatch();
+                var eventDataBatch = await this.eventHubClient.CreateBatchAsync();
 
                 while (this.channel.Reader.TryRead(out var eventData))
                 {
@@ -66,7 +67,7 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
                     // There was not enough space available, so send the current batch and create a
                     // new one.
                     await TrySendAsync(eventDataBatch).ConfigureAwait(false);
-                    eventDataBatch = this.eventHubClient.CreateBatch();
+                    eventDataBatch = await this.eventHubClient.CreateBatchAsync();
 
                     // Attempt to add the current event data to new batch.
                     eventDataBatch.TryAdd(eventData);

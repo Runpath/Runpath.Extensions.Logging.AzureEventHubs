@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Azure.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging.Configuration;
@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.Logging
         /// <param name="builder">The <see cref="ILoggingBuilder"/> to use.</param>
         /// <param name="eventHubClientFactory"></param>
         public static ILoggingBuilder AddAzureEventHubs(this ILoggingBuilder builder,
-            Func<AzureEventHubsLoggerOptions, EventHubClient> eventHubClientFactory)
+            Func<AzureEventHubsLoggerOptions, EventHubProducerClient> eventHubClientFactory)
         {
             if (builder is null)
             {
@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.Logging
         /// <param name="eventHubClientFactory"></param>
         /// <param name="configure"></param>
         public static ILoggingBuilder AddAzureEventHubs(this ILoggingBuilder builder,
-            Func<AzureEventHubsLoggerOptions, EventHubClient> eventHubClientFactory,
+            Func<AzureEventHubsLoggerOptions, EventHubProducerClient> eventHubClientFactory,
             Action<AzureEventHubsLoggerOptions> configure)
         {
             if (builder is null)
