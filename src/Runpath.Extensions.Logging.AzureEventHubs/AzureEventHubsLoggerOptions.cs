@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Threading.Channels;
-using Microsoft.Azure.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Runpath.Extensions.Logging.AzureEventHubs
 {
     public class AzureEventHubsLoggerOptions
     {
+        public string FullyQualifiedNamespace { get; set; }
+
+        [Obsolete("FullyQualifiedNamespace should be used instead. ")]
         public Uri Endpoint { get; set; }
 
         public string EntityPath { get; set; }
@@ -29,6 +32,6 @@ namespace Runpath.Extensions.Logging.AzureEventHubs
         /// </summary>
         public BoundedChannelFullMode QueueMode { get; set; } = BoundedChannelFullMode.DropOldest;
 
-        internal Func<AzureEventHubsLoggerOptions, EventHubClient> EventHubClientFactory { get; set; }
+        internal Func<AzureEventHubsLoggerOptions, EventHubProducerClient> EventHubClientFactory { get; set; }
     }
 }

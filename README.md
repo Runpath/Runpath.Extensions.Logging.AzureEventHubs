@@ -18,7 +18,7 @@ Once your Azure Event Hubs resource is configured in Azure, you can then add its
 {
   "Logging": {
     "AzureEventHubs": {
-      "Endpoint": "sb://example.servicebus.windows.net",
+      "FullyQualifiedNamespace": "example.servicebus.windows.net",
       "EntityPath": "my-hub",
       "SharedAccessKeyName": "my-key",
       "SharedAccessKey": "..."
@@ -27,15 +27,15 @@ Once your Azure Event Hubs resource is configured in Azure, you can then add its
 }
 ```
 
-Add this logger provider to your logging builder, supplying a delegate that creates an `EventHubClient` to your specifications, for example:
+Add this logger provider to your logging builder, supplying a delegate that creates an `EventHubProducerClient` to your specifications, for example:
 
 ```csharp
 var services = new ServiceCollection();
 
 services.AddLogging(builder => builder.AddAzureEventHubs(options =>
   options.TryGetConnectionString(out string connectionString)
-    ? EventHubClient.CreateFromConnectionString(connectionString)
-    : EventHubClient.CreateWithManagedServiceIdentity(options.Endpoint, options.EntityPath);
+    ? new EventHubProducerClient(connectionString)
+    : new EventHubProducerClient(options.FullyQualifiedNamespace, options.EntityPath, new DefaultAzureCredential());
 ));
 ```
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Azure.EventHubs;
+using Azure.Messaging.EventHubs;
 
 namespace Runpath.Extensions.Logging.AzureEventHubs
 {
